@@ -1,0 +1,98 @@
+# ==========================================
+# WATERWATCH-AI .gitignore
+# ==========================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Virtual Environments ---
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+.virtual_documents/
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Machine Learning Models & Heavy Artifacts ---
+*.pkl
+*.joblib
+*.h5
+*.keras
+*.onnx
+*.pt
+*.pth
+*.bin
+*.model
+models/*
+!models/.gitkeep
+
+# --- Datasets ---
+# Processed data outputs
+data/processed/*
+!data/processed/.gitkeep
+
+# --- Results & Metrics ---
+results/figures/*
+!results/figures/.gitkeep
+results/metrics/*
+!results/metrics/.gitkeep
+
+# --- Databases ---
+*.db
+*.sqlite
+*.sqlite3
+*.sql.gz
+
+# --- Environment Secrets & Configs ---
+.env
+.env.*
+!.env.example
+
+# --- Logs & Performance ---
+*.log
+logs/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# --- OS-specific files ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.AppleDouble
+.LSOverride
