@@ -1,0 +1,4 @@
+Model,Accuracy,Precision (Macro),Precision (Weighted),Recall (Non-Potable / 0),Recall (Potable / 1),Recall (Macro),F1-Score (Macro),F1-Score (Weighted),ROC-AUC,Dangerous Errors (Actual 0 -> Pred 1),Dangerous Error Rate (%),5-Fold CV Accuracy Mean,5-Fold CV Accuracy Std,5-Fold CV F1-Macro Mean,5-Fold CV F1-Macro Std
+Dummy Classifier (Baseline),0.6098,0.3049,0.3718,1.0,0.0,0.5,0.3788,0.4619,0.5,0,0.0,0.6099,0.0009,0.3789,0.0004
+Gaussian Naive Bayes,0.6143,0.5733,0.5859,0.8875,0.1875,0.5375,0.5062,0.5569,0.609,45,11.25,0.6275,0.0074,0.5393,0.0129
+Decision Tree Classifier,0.6311,0.6029,0.6126,0.8675,0.2617,0.5646,0.5489,0.5912,0.6011,53,13.25,0.6298,0.0095,0.5192,0.0307
