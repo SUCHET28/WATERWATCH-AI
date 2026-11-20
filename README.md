@@ -206,7 +206,7 @@ probabilities = pipeline.predict_proba(sample)[0]  # [P(Non-Potable), P(Potable)
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/WATERWATCH-AI.git
+git clone https://github.com/SUCHET28/WATERWATCH-AI.git
 cd WATERWATCH-AI
 ```
 
@@ -227,6 +227,29 @@ cd WATERWATCH-AI
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
+
+### 4. Canonical Notebook Execution Order
+To reproduce Member 1's experimental pipeline, execute the notebooks in the following strict order:
+1. **`notebooks/01_dataset_exploration.ipynb`**:
+   - Loads `data/raw/water_potability.csv`.
+   - Performs duplicate verification (0 duplicates found) and missing-value quantification.
+   - Generates the 6 core EDA visual distributions (`results/figures/01_*` through `06_*`).
+2. **`notebooks/02_data_preprocessing.ipynb` (Canonical Preprocessing Notebook)**:
+   - Investigates statistical outliers using the $1.5 \times IQR$ method and establishes justification for retaining contamination signals.
+   - Executes stratified 80/20 train-test splitting (`random_state=42`) **before** any fitting to prevent data leakage.
+   - Fits the Scikit-Learn `Pipeline` (`SimpleImputer(strategy='median')` + `StandardScaler()`) strictly on training data.
+   - *(Note: `src/preprocessing.ipynb` is an unexecuted development mirror retained for legacy reference; `notebooks/02_data_preprocessing.ipynb` is the primary canonical notebook).*
+3. **`notebooks/03_model_training_and_evaluation.ipynb`**:
+   - Implements the `DummyClassifier(strategy='most_frequent')` majority-class baseline.
+   - Trains regularized `GaussianNB` and `DecisionTreeClassifier` within leakage-free Scikit-Learn pipelines.
+   - Conducts 5-fold stratified cross-validation strictly on training data.
+   - Computes multi-metric benchmarks and exports `results/metrics/final_model_comparison.csv` and `models/*.joblib`.
+
+### 5. Exported Model Artifact Details
+- **`models/gaussian_nb_pipeline.joblib`**: Encapsulates median imputer, standard scaler, and Gaussian Naive Bayes classifier.
+- **`models/decision_tree_pipeline.joblib`**: Encapsulates median imputer and regularized Decision Tree classifier (`max_depth=6`, `min_samples_leaf=10`).
+- **Feature Consistency:** Both models expect the exact 9-feature order: `['ph', 'Hardness', 'Solids', 'Chloramines', 'Sulfate', 'Conductivity', 'Organic_carbon', 'Trihalomethanes', 'Turbidity']`. Missing inputs (`NaN`) are safely imputed by the internal pipeline step.
+
 
 ---
 
