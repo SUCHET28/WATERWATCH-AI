@@ -1,0 +1,85 @@
+{
+  "evaluation_scope": "Final verified benchmark with DummyClassifier baseline and non-potable screening audit",
+  "split": {
+    "train_samples": 2620,
+    "test_samples": 656,
+    "random_state": 42,
+    "stratified": true
+  },
+  "benchmark_table": [
+    {
+      "Model": "Dummy Classifier (Baseline)",
+      "Accuracy": 0.6098,
+      "Precision (Macro)": 0.3049,
+      "Precision (Weighted)": 0.3718,
+      "Recall (Non-Potable / 0)": 1.0,
+      "Recall (Potable / 1)": 0.0,
+      "Recall (Macro)": 0.5,
+      "F1-Score (Macro)": 0.3788,
+      "F1-Score (Weighted)": 0.4619,
+      "ROC-AUC": 0.5,
+      "Dangerous Errors (Actual 0 -> Pred 1)": 0,
+      "Dangerous Error Rate (%)": 0.0,
+      "5-Fold CV Accuracy Mean": 0.6099,
+      "5-Fold CV Accuracy Std": 0.0009,
+      "5-Fold CV F1-Macro Mean": 0.3789,
+      "5-Fold CV F1-Macro Std": 0.0004
+    },
+    {
+      "Model": "Gaussian Naive Bayes",
+      "Accuracy": 0.6143,
+      "Precision (Macro)": 0.5733,
+      "Precision (Weighted)": 0.5859,
+      "Recall (Non-Potable / 0)": 0.8875,
+      "Recall (Potable / 1)": 0.1875,
+      "Recall (Macro)": 0.5375,
+      "F1-Score (Macro)": 0.5062,
+      "F1-Score (Weighted)": 0.5569,
+      "ROC-AUC": 0.609,
+      "Dangerous Errors (Actual 0 -> Pred 1)": 45,
+      "Dangerous Error Rate (%)": 11.25,
+      "5-Fold CV Accuracy Mean": 0.6275,
+      "5-Fold CV Accuracy Std": 0.0074,
+      "5-Fold CV F1-Macro Mean": 0.5393,
+      "5-Fold CV F1-Macro Std": 0.0129
+    },
+    {
+      "Model": "Decision Tree Classifier",
+      "Accuracy": 0.6311,
+      "Precision (Macro)": 0.6029,
+      "Precision (Weighted)": 0.6126,
+      "Recall (Non-Potable / 0)": 0.8675,
+      "Recall (Potable / 1)": 0.2617,
+      "Recall (Macro)": 0.5646,
+      "F1-Score (Macro)": 0.5489,
+      "F1-Score (Weighted)": 0.5912,
+      "ROC-AUC": 0.6011,
+      "Dangerous Errors (Actual 0 -> Pred 1)": 53,
+      "Dangerous Error Rate (%)": 13.25,
+      "5-Fold CV Accuracy Mean": 0.6298,
+      "5-Fold CV Accuracy Std": 0.0095,
+      "5-Fold CV F1-Macro Mean": 0.5192,
+      "5-Fold CV F1-Macro Std": 0.0307
+    }
+  ],
+  "confusion_matrices": {
+    "dummy_classifier": {
+      "TN": 400,
+      "FP_dangerous_error": 0,
+      "FN": 256,
+      "TP": 0
+    },
+    "gaussian_naive_bayes": {
+      "TN": 355,
+      "FP_dangerous_error": 45,
+      "FN": 208,
+      "TP": 48
+    },
+    "decision_tree": {
+      "TN": 347,
+      "FP_dangerous_error": 53,
+      "FN": 189,
+      "TP": 67
+    }
+  }
+}
