@@ -1,0 +1,27 @@
+# ============================================================
+# WATERWATCH AI — Project Dependencies
+# Member 1 (Data & ML) and Member 3 (App Architecture)
+# ============================================================
+
+# --- Core Data Science & Scientific Computing ---
+numpy>=1.24.0,<2.0.0
+pandas>=2.0.0
+scipy>=1.10.0,<2.0.0
+
+# --- Machine Learning & Pipeline Serialization ---
+scikit-learn>=1.3.0
+joblib>=1.3.0
+
+# --- Static Data Visualization (EDA & Benchmarking) ---
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# --- Interactive Visualizations & Explainability (XAI) ---
+plotly>=5.15.0
+shap>=0.42.0
+
+# --- Streamlit Web Application (Member 3 Dashboard) ---
+streamlit>=1.30.0
+Pillow>=10.0.0
+openpyxl>=3.1.0
+jinja2>=3.1.0
