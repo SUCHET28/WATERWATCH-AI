@@ -1,0 +1,306 @@
+{
+  "study_title": "WATERWATCH AI Comprehensive 3x3 Imputation & Classifier Benchmark",
+  "dataset_shape": [
+    3276,
+    10
+  ],
+  "missing_values_profile": {
+    "Sulfate": 781,
+    "ph": 491,
+    "Trihalomethanes": 162
+  },
+  "train_samples": 2620,
+  "test_samples": 656,
+  "experiments": [
+    {
+      "imputation_method": "Median Imputation (Baseline)",
+      "classifier": "Dummy Classifier",
+      "test_metrics": {
+        "accuracy": 0.6098,
+        "precision_macro": 0.3049,
+        "precision_weighted": 0.3718,
+        "recall_non_potable_0": 1.0,
+        "recall_potable_1": 0.0,
+        "recall_macro": 0.5,
+        "f1_macro": 0.3788,
+        "f1_weighted": 0.4619,
+        "roc_auc": 0.5,
+        "dangerous_fp_count": 0,
+        "dangerous_fp_rate_pct": 0.0
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 400,
+        "false_positive_dangerous_error": 0,
+        "false_negative_waste_error": 256,
+        "true_positive_safe_detection": 0
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6099,
+        "accuracy_std": 0.0009,
+        "f1_macro_mean": 0.3789,
+        "f1_macro_std": 0.0004
+      }
+    },
+    {
+      "imputation_method": "Median Imputation (Baseline)",
+      "classifier": "Gaussian Naive Bayes",
+      "test_metrics": {
+        "accuracy": 0.6143,
+        "precision_macro": 0.5733,
+        "precision_weighted": 0.5859,
+        "recall_non_potable_0": 0.8875,
+        "recall_potable_1": 0.1875,
+        "recall_macro": 0.5375,
+        "f1_macro": 0.5062,
+        "f1_weighted": 0.5569,
+        "roc_auc": 0.609,
+        "dangerous_fp_count": 45,
+        "dangerous_fp_rate_pct": 11.25
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 355,
+        "false_positive_dangerous_error": 45,
+        "false_negative_waste_error": 208,
+        "true_positive_safe_detection": 48
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6275,
+        "accuracy_std": 0.0074,
+        "f1_macro_mean": 0.5393,
+        "f1_macro_std": 0.0129
+      }
+    },
+    {
+      "imputation_method": "Median Imputation (Baseline)",
+      "classifier": "Decision Tree",
+      "test_metrics": {
+        "accuracy": 0.6311,
+        "precision_macro": 0.6029,
+        "precision_weighted": 0.6126,
+        "recall_non_potable_0": 0.8675,
+        "recall_potable_1": 0.2617,
+        "recall_macro": 0.5646,
+        "f1_macro": 0.5489,
+        "f1_weighted": 0.5912,
+        "roc_auc": 0.6011,
+        "dangerous_fp_count": 53,
+        "dangerous_fp_rate_pct": 13.25
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 347,
+        "false_positive_dangerous_error": 53,
+        "false_negative_waste_error": 189,
+        "true_positive_safe_detection": 67
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6298,
+        "accuracy_std": 0.0095,
+        "f1_macro_mean": 0.5192,
+        "f1_macro_std": 0.0307
+      }
+    },
+    {
+      "imputation_method": "Median Imputation (Baseline)",
+      "classifier": "Random Forest",
+      "test_metrics": {
+        "accuracy": 0.6662,
+        "precision_macro": 0.6561,
+        "precision_weighted": 0.6598,
+        "recall_non_potable_0": 0.88,
+        "recall_potable_1": 0.332,
+        "recall_macro": 0.606,
+        "f1_macro": 0.5999,
+        "f1_weighted": 0.6356,
+        "roc_auc": 0.6492,
+        "dangerous_fp_count": 48,
+        "dangerous_fp_rate_pct": 12.0
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 352,
+        "false_positive_dangerous_error": 48,
+        "false_negative_waste_error": 171,
+        "true_positive_safe_detection": 85
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6809,
+        "accuracy_std": 0.0157,
+        "f1_macro_mean": 0.6157,
+        "f1_macro_std": 0.0248
+      }
+    },
+    {
+      "imputation_method": "KNN Imputation (k=5)",
+      "classifier": "Gaussian Naive Bayes",
+      "test_metrics": {
+        "accuracy": 0.6159,
+        "precision_macro": 0.5765,
+        "precision_weighted": 0.5886,
+        "recall_non_potable_0": 0.8875,
+        "recall_potable_1": 0.1914,
+        "recall_macro": 0.5395,
+        "f1_macro": 0.509,
+        "f1_weighted": 0.5593,
+        "roc_auc": 0.6083,
+        "dangerous_fp_count": 45,
+        "dangerous_fp_rate_pct": 11.25
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 355,
+        "false_positive_dangerous_error": 45,
+        "false_negative_waste_error": 207,
+        "true_positive_safe_detection": 49
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6279,
+        "accuracy_std": 0.01,
+        "f1_macro_mean": 0.5353,
+        "f1_macro_std": 0.0182
+      }
+    },
+    {
+      "imputation_method": "KNN Imputation (k=5)",
+      "classifier": "Decision Tree",
+      "test_metrics": {
+        "accuracy": 0.6311,
+        "precision_macro": 0.6081,
+        "precision_weighted": 0.6151,
+        "recall_non_potable_0": 0.9025,
+        "recall_potable_1": 0.207,
+        "recall_macro": 0.5548,
+        "f1_macro": 0.5268,
+        "f1_weighted": 0.5756,
+        "roc_auc": 0.5852,
+        "dangerous_fp_count": 39,
+        "dangerous_fp_rate_pct": 9.75
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 361,
+        "false_positive_dangerous_error": 39,
+        "false_negative_waste_error": 203,
+        "true_positive_safe_detection": 53
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6336,
+        "accuracy_std": 0.0132,
+        "f1_macro_mean": 0.5239,
+        "f1_macro_std": 0.0332
+      }
+    },
+    {
+      "imputation_method": "KNN Imputation (k=5)",
+      "classifier": "Random Forest",
+      "test_metrics": {
+        "accuracy": 0.6524,
+        "precision_macro": 0.6361,
+        "precision_weighted": 0.642,
+        "recall_non_potable_0": 0.875,
+        "recall_potable_1": 0.3047,
+        "recall_macro": 0.5898,
+        "f1_macro": 0.5803,
+        "f1_weighted": 0.6185,
+        "roc_auc": 0.663,
+        "dangerous_fp_count": 50,
+        "dangerous_fp_rate_pct": 12.5
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 350,
+        "false_positive_dangerous_error": 50,
+        "false_negative_waste_error": 178,
+        "true_positive_safe_detection": 78
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6683,
+        "accuracy_std": 0.0091,
+        "f1_macro_mean": 0.6039,
+        "f1_macro_std": 0.0108
+      }
+    },
+    {
+      "imputation_method": "Iterative Imputation (MICE)",
+      "classifier": "Gaussian Naive Bayes",
+      "test_metrics": {
+        "accuracy": 0.6143,
+        "precision_macro": 0.5733,
+        "precision_weighted": 0.5859,
+        "recall_non_potable_0": 0.8875,
+        "recall_potable_1": 0.1875,
+        "recall_macro": 0.5375,
+        "f1_macro": 0.5062,
+        "f1_weighted": 0.5569,
+        "roc_auc": 0.6082,
+        "dangerous_fp_count": 45,
+        "dangerous_fp_rate_pct": 11.25
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 355,
+        "false_positive_dangerous_error": 45,
+        "false_negative_waste_error": 208,
+        "true_positive_safe_detection": 48
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6271,
+        "accuracy_std": 0.0095,
+        "f1_macro_mean": 0.5382,
+        "f1_macro_std": 0.015
+      }
+    },
+    {
+      "imputation_method": "Iterative Imputation (MICE)",
+      "classifier": "Decision Tree",
+      "test_metrics": {
+        "accuracy": 0.6326,
+        "precision_macro": 0.6055,
+        "precision_weighted": 0.6149,
+        "recall_non_potable_0": 0.87,
+        "recall_potable_1": 0.2617,
+        "recall_macro": 0.5659,
+        "f1_macro": 0.5501,
+        "f1_weighted": 0.5924,
+        "roc_auc": 0.5917,
+        "dangerous_fp_count": 52,
+        "dangerous_fp_rate_pct": 13.0
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 348,
+        "false_positive_dangerous_error": 52,
+        "false_negative_waste_error": 189,
+        "true_positive_safe_detection": 67
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6347,
+        "accuracy_std": 0.0095,
+        "f1_macro_mean": 0.5317,
+        "f1_macro_std": 0.0361
+      }
+    },
+    {
+      "imputation_method": "Iterative Imputation (MICE)",
+      "classifier": "Random Forest",
+      "test_metrics": {
+        "accuracy": 0.6784,
+        "precision_macro": 0.679,
+        "precision_weighted": 0.6788,
+        "recall_non_potable_0": 0.9,
+        "recall_potable_1": 0.332,
+        "recall_macro": 0.616,
+        "f1_macro": 0.6098,
+        "f1_weighted": 0.6457,
+        "roc_auc": 0.6492,
+        "dangerous_fp_count": 40,
+        "dangerous_fp_rate_pct": 10.0
+      },
+      "confusion_matrix": {
+        "true_negative_safe_rejection": 360,
+        "false_positive_dangerous_error": 40,
+        "false_negative_waste_error": 171,
+        "true_positive_safe_detection": 85
+      },
+      "cross_validation_5fold": {
+        "accuracy_mean": 0.6775,
+        "accuracy_std": 0.0099,
+        "f1_macro_mean": 0.6138,
+        "f1_macro_std": 0.0199
+      }
+    }
+  ]
+}

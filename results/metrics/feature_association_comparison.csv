@@ -1,0 +1,10 @@
+Feature,Pearson r (with Potability),Spearman rho (with Potability),Mutual Information Score,Point-Biserial r,PB P-Value,BH Adjusted P-Value,Significant (BH)
+Hardness,-0.0138,-0.0106,0.0266,-0.0138,0.428542,0.771376,False
+Conductivity,-0.0081,-0.0104,0.0071,-0.0081,0.641885,0.888195,False
+Organic_carbon,-0.03,-0.0268,0.004,-0.03,0.085997,0.386986,False
+Turbidity,0.0016,0.0011,0.0031,0.0016,0.927939,0.927939,False
+Sulfate,-0.0236,-0.0167,0.0024,-0.0236,0.239097,0.537968,False
+Solids,0.0337,0.0262,0.0011,0.0337,0.053464,0.386986,False
+ph,-0.0036,-0.0022,0.0002,-0.0036,0.851189,0.927939,False
+Chloramines,0.0238,0.025,0.0,0.0238,0.17361,0.52083,False
+Trihalomethanes,0.0071,0.0053,0.0,0.0071,0.690818,0.888195,False

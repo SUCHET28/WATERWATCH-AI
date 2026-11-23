@@ -1,0 +1,10 @@
+Feature,PB Coefficient,P-Value,N (pairwise complete),BH Adjusted P-Value,"Significant (BH, alpha=0.05)"
+ph,-0.0036,0.851189,2785,0.927939,False
+Hardness,-0.0138,0.428542,3276,0.771376,False
+Solids,0.0337,0.053464,3276,0.386986,False
+Chloramines,0.0238,0.17361,3276,0.52083,False
+Sulfate,-0.0236,0.239097,2495,0.537968,False
+Conductivity,-0.0081,0.641885,3276,0.888195,False
+Organic_carbon,-0.03,0.085997,3276,0.386986,False
+Trihalomethanes,0.0071,0.690818,3114,0.888195,False
+Turbidity,0.0016,0.927939,3276,0.927939,False

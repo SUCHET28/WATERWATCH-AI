@@ -267,4 +267,100 @@ else:
 | **20** | Prepare Member 1 contribution summary | ✅ **Completed** | Full document herein + updated project `README.md` |
 
 ---
+
+## 8. Advanced Missing-Value Imputation Comparison (3×3 Benchmark + Baseline)
+
+### 8.1 Methodologies Evaluated
+1. **Method A: Median Imputation (`SimpleImputer(strategy='median')`)** — Preserved project baseline. Fast ($O(N)$ fit), non-parametric, robust to skewness.
+2. **Method B: KNN Imputation (`KNNImputer(n_neighbors=5)`)** — Distance-based local donor averaging. **Leakage-Free Architecture:** Preceded by `StandardScaler` fitted solely on training folds so Euclidean distance is not distorted by high-variance features (`Solids` variance $\approx 7.6 \times 10^7$ vs. `ph` $\approx 2.5$).
+3. **Method C: Iterative Imputation (`IterativeImputer(estimator=BayesianRidge(), max_iter=10, random_state=42)`)** — Round-robin MICE regression preserving multivariate covariance.
+
+### 8.2 Comprehensive 10-Configuration Benchmark Results (Test Set, n=656)
+
+| Imputation Method | Classifier | Accuracy | Bal. Acc | F1-Macro | ROC-AUC | MCC | Dangerous FP (0 $\rightarrow$ 1) | Dangerous FP Rate (%) | 5-Fold CV Acc (Mean $\pm$ Std) | 5-Fold CV F1 (Mean $\pm$ Std) |
+|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Median (Baseline)** | Dummy Classifier | 0.6098 | 0.5000 | 0.3788 | 0.5000 | 0.0000 | **0** | **0.00%** | $0.6099 \pm 0.0009$ | $0.3789 \pm 0.0004$ |
+| **Median (Baseline)** | Gaussian Naive Bayes | 0.6143 | 0.5375 | 0.5062 | 0.6090 | 0.1049 | 45 | 11.25% | $0.6275 \pm 0.0074$ | $0.5393 \pm 0.0129$ |
+| **Median (Baseline)** | Decision Tree | 0.6311 | 0.5646 | 0.5489 | 0.6011 | 0.1630 | 53 | 13.25% | $0.6298 \pm 0.0095$ | $0.5192 \pm 0.0307$ |
+| **Median (Baseline)** | Random Forest | 0.6662 | 0.6060 | 0.5999 | 0.6492 | 0.2573 | 48 | 12.00% | $0.6809 \pm 0.0157$ | $0.6157 \pm 0.0248$ |
+| **KNN (k=5)** | Gaussian Naive Bayes | 0.6159 | 0.5395 | 0.5090 | 0.6083 | 0.1099 | 45 | 11.25% | $0.6279 \pm 0.0100$ | $0.5353 \pm 0.0182$ |
+| **KNN (k=5)** | Decision Tree | 0.6311 | 0.5548 | 0.5268 | 0.5852 | 0.1539 | **39** | **9.75%** | $0.6336 \pm 0.0132$ | $0.5239 \pm 0.0332$ |
+| **KNN (k=5)** | Random Forest | 0.6524 | 0.5898 | 0.5803 | **0.6629** | 0.2212 | 50 | 12.50% | $0.6683 \pm 0.0091$ | $0.6039 \pm 0.0108$ |
+| **Iterative MICE** | Gaussian Naive Bayes | 0.6143 | 0.5375 | 0.5062 | 0.6082 | 0.1049 | 45 | 11.25% | $0.6271 \pm 0.0095$ | $0.5382 \pm 0.0150$ |
+| **Iterative MICE** | Decision Tree | 0.6326 | 0.5659 | 0.5501 | 0.5917 | 0.1667 | 52 | 13.00% | $0.6347 \pm 0.0095$ | $0.5317 \pm 0.0361$ |
+| **Iterative MICE** | **Random Forest** | **0.6784** | **0.6160** | **0.6098** | 0.6492 | **0.2882** | **40** | **10.00%** | $0.6775 \pm 0.0099$ | $0.6138 \pm 0.0199$ |
+
+*Artifacts:* `results/metrics/imputation_model_comparison.csv`, `results/metrics/imputation_model_comparison.json`, `docs/IMPUTATION_METHOD_COMPARISON.md`.
+
+### 8.3 Best Imputer Identifications
+- **Best for Gaussian NB:** KNN Imputation ($k=5$) — F1-Macro: 0.5090, MCC: 0.1099.
+- **Best for Decision Tree:** Iterative MICE — F1-Macro: 0.5501, MCC: 0.1667, CV Acc: $0.6347 \pm 0.0095$. (Safest DT for screening: KNN Imputation with 39 dangerous FPs / 9.75%).
+- **Best for Random Forest:** Iterative MICE — Holdout Acc: 0.6784, F1-Macro: 0.6098, MCC: 0.2882, RF Dangerous FP Rate: 10.00%.
+- **Best Overall Configuration:** **Iterative MICE + Random Forest** establishes highest predictive accuracy, F1-Macro, and MCC while cutting dangerous false positives by 16.7% relative to the Median+RF baseline.
+
+---
+
+## 9. Advanced Model Evaluation & Classification Threshold Analysis
+
+### 9.1 Evaluation Metrics Suite
+To address dataset imbalance and asymmetric real-world costs:
+- **Balanced Accuracy & Matthews Correlation Coefficient (MCC):** Provide unbiased performance indicators where accuracy can be inflated by majority-class prevalence.
+- **Average Precision (AP) & Precision–Recall Curves:** Evaluated for both Class 1 (`results/figures/precision_recall_comparison.png`) and Class 0 (`results/figures/class_specific_precision_recall.png`).
+
+### 9.2 Threshold Sweep Analysis (0.10 to 0.90)
+Classification thresholds were systematically evaluated on training out-of-fold predictions to prevent test-set leakage:
+- **Default Reference ($\tau = 0.50$):** Standard balanced threshold.
+- **Conservative Screening ($\tau = 0.60$–$0.70$):** Demands higher model confidence before declaring water potable, drastically reducing dangerous false positives (actual 0 labeled 1) at the expense of lower potable recall (more precautionary false alarms).
+- **Public Health Precaution:** Lowering dangerous error rates to <5% requires higher decision thresholds ($\tau \ge 0.65$), documenting a deliberate operational trade-off.
+- *Artifacts:* `results/metrics/threshold_comparison.csv`, `results/figures/threshold_comparison.png`, `docs/ADVANCED_MODEL_EVALUATION_REPORT.md`.
+
+---
+
+## 10. Advanced Feature Association Analysis
+
+Integrated into `notebooks/01_dataset_exploration.ipynb` (Phase 5):
+1. **Spearman Rank Correlation:** Evaluated monotonic relationships (`results/figures/spearman_correlation_heatmap.png`). Highest absolute correlation with Potability remains low ($|\rho| \le 0.027$ for Organic_carbon and Chloramines).
+2. **Mutual Information (`mutual_info_classif`):** Quantified non-linear and statistical dependency (`results/metrics/mutual_information_scores.csv`, `results/figures/mutual_information_scores.png`). Hardness ($I \approx 0.0266$) and Conductivity ($I \approx 0.0071$) ranked highest.
+3. **Point-Biserial Correlation & Benjamini–Hochberg Adjustment:** Evaluated continuous-binary associations with multiple-hypothesis FDR control at $\alpha = 0.05$ (`results/metrics/point_biserial_results.csv`). Following BH correction, zero features reached statistical significance.
+4. **Governance Rule:** Features with low linear correlation must **not** be arbitrarily discarded; non-linear classifiers capture multivariate interaction boundaries that bivariate statistics miss.
+
+---
+
+## 11. Model Robustness Testing Under Simulated Imperfect Data
+
+Implemented in `notebooks/04_model_robustness_testing.ipynb` and `scripts/run_robustness_tests.py`:
+
+> **DISCLAIMER:** These experiments use simulated data perturbations and do not establish  
+> real-world generalization, laboratory accuracy, or certification of water safety.
+
+### 11.1 Scenarios Tested (84 Total Evaluations)
+1. **Baseline Reference:** Untouched held-out test set ($N=656$).
+2. **Additional Missingness (10%, 20%):** Random NaN injection into observed test entries. Handled via pipeline imputers without retraining.
+3. **Measurement Noise (1%, 5% of training standard deviation):** Gaussian noise simulation modeling sensor inaccuracy.
+4. **Distribution Shift (+0.5×, +1.0× training standard deviation):** Global and feature-specific covariate shifts.
+5. **Individual Feature Perturbation ($\pm 5\%$ of training std):** Identifies per-feature model sensitivity.
+
+### 11.2 Key Robustness Findings
+- **Ensemble Stability:** Random Forest demonstrated greatest resistance to noise and minor distribution shifts due to variance reduction across 100 decision trees.
+- **Imputer Graceful Degradation:** Pipeline median imputation adapted to additional missingness with only modest performance drops (accuracy $\approx 0.626$ at 20% missingness vs. $0.663$ baseline).
+- **Sensitive Features:** Tree-based models displayed greatest sensitivity to perturbations in `ph`, `Sulfate`, and `Chloramines`.
+- *Artifacts:* `results/metrics/robustness_test_results.csv`, `docs/MODEL_ROBUSTNESS_REPORT.md`, 5 visualization figures in `results/figures/`.
+
+---
+
+## 12. Verification & Test Suite Status (10/10 Requirements Passed)
+
+Automated test suite `tests/test_member_1_pipeline.py` verifies all Section 8 governance requirements:
+1. ✅ Nine input features present and strictly ordered.
+2. ✅ All three imputers (Median, KNN, Iterative MICE) handle missing values properly.
+3. ✅ All three classifiers (GNB, DT, RF) train and predict valid labels.
+4. ✅ Scikit-learn pipelines produce zero NaN predictions on missing data.
+5. ✅ Stratified 5-fold cross-validation executes without preprocessing leakage.
+6. ✅ Threshold calculations correctly index Class 1 probability.
+7. ✅ Confusion matrix logic correctly designates FP as dangerous contamination error.
+8. ✅ Robustness perturbation tests do not mutate raw dataset or test split.
+9. ✅ Existing baseline joblib artifacts load and execute consistently.
+10. ✅ Streamlit web application integration remains 100% compatible.
+
+---
 *Report certified by Member 1 (Data & ML Engineer), WATERWATCH AI Project Team.*

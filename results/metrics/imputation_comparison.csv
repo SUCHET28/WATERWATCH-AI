@@ -1,0 +1,11 @@
+Imputation Method,Classifier,Accuracy,Precision (Macro),Precision (Weighted),Recall (Non-Potable / 0),Recall (Potable / 1),Recall (Macro),F1-Score (Macro),F1-Score (Weighted),ROC-AUC,Dangerous Errors (Actual 0 -> Pred 1),Dangerous Error Rate (%),5-Fold CV Accuracy Mean,5-Fold CV Accuracy Std,5-Fold CV F1-Macro Mean,5-Fold CV F1-Macro Std
+Median Imputation (Baseline),Dummy Classifier,0.6098,0.3049,0.3718,1.0,0.0,0.5,0.3788,0.4619,0.5,0,0.0,0.6099,0.0009,0.3789,0.0004
+Median Imputation (Baseline),Gaussian Naive Bayes,0.6143,0.5733,0.5859,0.8875,0.1875,0.5375,0.5062,0.5569,0.609,45,11.25,0.6275,0.0074,0.5393,0.0129
+Median Imputation (Baseline),Decision Tree,0.6311,0.6029,0.6126,0.8675,0.2617,0.5646,0.5489,0.5912,0.6011,53,13.25,0.6298,0.0095,0.5192,0.0307
+Median Imputation (Baseline),Random Forest,0.6662,0.6561,0.6598,0.88,0.332,0.606,0.5999,0.6356,0.6492,48,12.0,0.6809,0.0157,0.6157,0.0248
+KNN Imputation (k=5),Gaussian Naive Bayes,0.6159,0.5765,0.5886,0.8875,0.1914,0.5395,0.509,0.5593,0.6083,45,11.25,0.6279,0.01,0.5353,0.0182
+KNN Imputation (k=5),Decision Tree,0.6311,0.6081,0.6151,0.9025,0.207,0.5548,0.5268,0.5756,0.5852,39,9.75,0.6336,0.0132,0.5239,0.0332
+KNN Imputation (k=5),Random Forest,0.6524,0.6361,0.642,0.875,0.3047,0.5898,0.5803,0.6185,0.663,50,12.5,0.6683,0.0091,0.6039,0.0108
+Iterative Imputation (MICE),Gaussian Naive Bayes,0.6143,0.5733,0.5859,0.8875,0.1875,0.5375,0.5062,0.5569,0.6082,45,11.25,0.6271,0.0095,0.5382,0.015
+Iterative Imputation (MICE),Decision Tree,0.6326,0.6055,0.6149,0.87,0.2617,0.5659,0.5501,0.5924,0.5917,52,13.0,0.6347,0.0095,0.5317,0.0361
+Iterative Imputation (MICE),Random Forest,0.6784,0.679,0.6788,0.9,0.332,0.616,0.6098,0.6457,0.6492,40,10.0,0.6775,0.0099,0.6138,0.0199

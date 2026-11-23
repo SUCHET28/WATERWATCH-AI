@@ -53,9 +53,10 @@ WATERWATCH-AI/
 │   ├── raw/                 # Original, immutable datasets (water_potability.csv)
 │   └── processed/           # Processed datasets
 ├── notebooks/               # Jupyter notebooks
-│   ├── 01_dataset_exploration.ipynb            # Phase 1 & 3: EDA & Visualizations
+│   ├── 01_dataset_exploration.ipynb            # Phase 1, 3 & 5: EDA & Advanced Feature Association
 │   ├── 02_data_preprocessing.ipynb             # Phase 2 & 4: Cleaning, Imputation, Splits
-│   └── 03_model_training_and_evaluation.ipynb  # Phase 5, 6, 7 & 8: Models, CV, Benchmarks, Export
+│   ├── 03_model_training_and_evaluation.ipynb  # Phase 5-8: Models, CV, Benchmarks, Export
+│   └── 04_model_robustness_testing.ipynb       # Phase 9: Perturbation & Shift Robustness Suite
 ├── src/
 │   ├── data/                # Data loading, cleaning, and preprocessing modules
 │   ├── models/              # Model training, inference, and serialization logic
@@ -69,13 +70,17 @@ WATERWATCH-AI/
 │   └── assets/              # Static styling, logos, and reference images
 ├── models/                  # Serialized trained Scikit-Learn pipelines (.joblib)
 │   ├── gaussian_nb_pipeline.joblib             # Imputer + Scaler + GaussianNB
-│   └── decision_tree_pipeline.joblib           # Imputer + DecisionTreeClassifier
+│   ├── decision_tree_pipeline.joblib           # Imputer + DecisionTreeClassifier
+│   └── random_forest_pipeline.joblib           # Imputer + RandomForestClassifier
 ├── results/
-│   ├── figures/             # 10 generated visualizations (EDA, ROC, confusion matrices)
+│   ├── figures/             # 20+ generated visualizations (EDA, PR curves, Heatmaps, Robustness)
 │   └── metrics/             # Benchmark metrics, CSV & JSON reports
-├── tests/                   # Unit and integration test suites
+├── tests/                   # Automated pytest suite (10/10 governance checks)
 ├── docs/                    # Architecture diagrams, specifications, and project reports
-│   └── MEMBER_1_TECHNICAL_REPORT.md            # Comprehensive Member 1 Report
+│   ├── MEMBER_1_TECHNICAL_REPORT.md            # Comprehensive Member 1 Report
+│   ├── IMPUTATION_METHOD_COMPARISON.md         # Advanced Imputation Study
+│   ├── ADVANCED_MODEL_EVALUATION_REPORT.md     # Multi-metric & Threshold Report
+│   └── MODEL_ROBUSTNESS_REPORT.md              # Perturbation & Covariate Shift Report
 ├── requirements.txt         # Project dependencies
 └── README.md                # Project documentation and team guide
 ```
@@ -244,6 +249,36 @@ To reproduce Member 1's experimental pipeline, execute the notebooks in the foll
    - Trains regularized `GaussianNB` and `DecisionTreeClassifier` within leakage-free Scikit-Learn pipelines.
    - Conducts 5-fold stratified cross-validation strictly on training data.
    - Computes multi-metric benchmarks and exports `results/metrics/final_model_comparison.csv` and `models/*.joblib`.
+4. **`notebooks/04_model_robustness_testing.ipynb`**:
+   - Evaluates existing fitted models under 5 simulated perturbation scenarios: additional missingness (10%, 20%), Gaussian measurement noise (1%, 5%), distribution shifts (+0.5, +1.0 std), and per-feature perturbations (±5% std).
+   - Generates 5 robustness figures in `results/figures/` and full results in `results/metrics/robustness_test_results.csv`.
+
+---
+
+## 🔬 Advanced ML Experimentation & Robustness Suite
+
+### 1. Advanced Imputation Benchmark (3×3 Combinations + Baseline)
+- **Methodologies:** Median Baseline (`SimpleImputer`), Scaled KNN ($k=5$), and Scaled Iterative MICE (`BayesianRidge`).
+- **Classifiers:** Gaussian Naive Bayes, Decision Tree, Random Forest + Dummy Baseline.
+- **Top Performer:** **Iterative MICE + Random Forest** (Accuracy: **0.6784**, F1-Macro: **0.6098**, MCC: **0.2882**, Dangerous FP Rate: **10.00%**).
+- **Reports & Artifacts:** `results/metrics/imputation_model_comparison.csv`, `docs/IMPUTATION_METHOD_COMPARISON.md`.
+
+### 2. Multi-Metric Evaluation & Classification Threshold Analysis
+- **Extended Metrics:** Balanced Accuracy, Matthews Correlation Coefficient (MCC), Average Precision (AP), and Per-Class Precision/Recall/F1.
+- **Threshold Sweep (0.10 to 0.90):** Evaluated via out-of-fold cross-validation to prevent leakage. Highlights operational trade-off: thresholds $\ge 0.65$ reduce dangerous false positives to $<5\%$ for conservative community screening.
+- **Reports & Artifacts:** `results/metrics/threshold_comparison.csv`, `results/figures/threshold_comparison.png`, `docs/ADVANCED_MODEL_EVALUATION_REPORT.md`.
+
+### 3. Advanced Feature Association Analysis
+- **Spearman Rank Correlation:** Rank-based monotonic associations (`results/figures/spearman_correlation_heatmap.png`).
+- **Mutual Information:** Non-linear statistical dependencies (`results/figures/mutual_information_scores.png`).
+- **Point-Biserial Correlation & FDR Correction:** Benjamini–Hochberg adjusted p-values confirm no single feature has significant linear correlation with potability at $\alpha=0.05$.
+- **Governance Rule:** Features with low linear correlation must not be arbitrarily discarded.
+
+### 4. Model Robustness Testing Under Simulated Data Conditions
+- **84 Systematic Perturbation Tests:** Stress-testing fitted pipelines on 10%/20% missingness, 1%/5% measurement noise, +0.5/+1.0 std distribution shift, and ±5% feature perturbations.
+- **Reports & Artifacts:** `results/metrics/robustness_test_results.csv`, `docs/MODEL_ROBUSTNESS_REPORT.md`, 5 figures in `results/figures/`.
+
+> **DISCLAIMER:** These experiments use simulated data perturbations and do not establish real-world generalization, laboratory accuracy, or certification of water safety. All predictions are preliminary screening approximations.
 
 ### 5. Exported Model Artifact Details
 - **`models/gaussian_nb_pipeline.joblib`**: Encapsulates median imputer, standard scaler, and Gaussian Naive Bayes classifier.
