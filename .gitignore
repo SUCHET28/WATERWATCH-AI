@@ -58,6 +58,7 @@ venv.bak/
 *.model
 models/*
 !models/.gitkeep
+!models/*.joblib
 
 # --- Datasets ---
 # Processed data outputs
@@ -67,8 +68,14 @@ data/processed/*
 # --- Results & Metrics ---
 results/figures/*
 !results/figures/.gitkeep
+!results/figures/*.png
 results/metrics/*
 !results/metrics/.gitkeep
+!results/metrics/*.csv
+!results/metrics/*.json
+
+# --- Scratch & Temporary Scripts ---
+scratch/
 
 # --- Databases ---
 *.db
