@@ -18,9 +18,9 @@
 
 | Role | Member | Assigned Branch | Primary Responsibilities |
 | :--- | :--- | :--- | :--- |
-| **Data Analysis** | Member 1 | `feature/data-analysis` | Exploratory Data Analysis (EDA), missing value imputation, feature distribution analysis, and data cleaning pipelines. |
+| **Data Analysis** | Member 1  *(Lead)*  | `feature/data-analysis` | Exploratory Data Analysis (EDA), missing value imputation, feature distribution analysis, and data cleaning pipelines. |
 | **ML Modeling** | Member 2 | `feature/ml-models` | Model development, hyperparameter tuning, model benchmarking, and performance evaluation metrics. |
-| **App Architecture** | Member 3 *(Lead)* | `feature/app-architecture` | Application architecture, interactive UI/dashboard layout, components, and explainability visualizations. |
+| **App Architecture** | Member 3 | `feature/app-architecture` | Application architecture, interactive UI/dashboard layout, components, and explainability visualizations. |
 | **Database & Docs** | Member 4 | `feature/database-docs` | Database schema design, source monitoring logging, system documentation, and reporting. |
 
 ---
